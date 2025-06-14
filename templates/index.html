@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Screener</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>AI Resume Screener</h1>
+    <form id="resumeForm">
+      <label for="job_desc">Job Description:</label>
+      <textarea id="job_desc" name="job_desc" required></textarea>
+
+      <label for="resumes">Upload Resume PDFs:</label>
+      <input type="file" id="resumes" name="resumes" accept=".pdf" multiple required>
+
+      <button type="submit">Rank Resumes</button>
+    </form>
+
+    <div id="results"></div>
+  </div>
+
+  <script>
+    document.getElementById('resumeForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const response = await fetch('/upload', {method: 'POST',body: formData});
+      const result = await response.json();
+      const output = document.getElementById("results");
+      output.innerHTML = "<h2>📊 Ranking Results:</h2>";
+      result.forEach(r => {
+        output.innerHTML += `<p><strong>${r.name}</strong> — ${r.score}</p>`;
+      });
+    });
+  </script>
+</body>
+</html>

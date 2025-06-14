@@ -1,0 +1,7 @@
+scikit-learn 
+spacy 
+pdfminer.six 
+streamlit
+flask
+werkzeug
+
